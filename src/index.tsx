@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import makeServer from "./server";
+
+if (
+  process.env.NODE_ENV === "development" &&
+  typeof makeServer === "function"
+) {
+  makeServer(); // For people following the tutorial
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
