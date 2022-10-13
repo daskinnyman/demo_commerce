@@ -1,13 +1,25 @@
 import React, { useEffect } from "react";
 import logo from "./logo.svg";
-import "./App.css";
+import "./Home.scss";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+function Home() {
+  const navigate = useNavigate()
   useEffect(() => {
-    fetch("api/reminders")
-      .then((el) => el.json())
+    axios.get("api/reminders")
+      .then((el) => el.data)
+      .then((data) => console.log(data));
+
+    axios.get("api/reminders/1")
+      .then((el) => el.data)
       .then((data) => console.log(data));
   }, []);
+
+
+  const handleLogin = () => {
+    navigate("login")
+  }
 
   return (
     <div className="App">
@@ -24,9 +36,11 @@ function App() {
         >
           Learn React
         </a>
+
+        <button onClick={handleLogin}>Login</button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Home;
