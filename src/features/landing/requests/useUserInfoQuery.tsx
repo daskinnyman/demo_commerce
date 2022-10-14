@@ -13,7 +13,9 @@ export const getUser = async () => {
 export const useUserInfoQuery = (shouldRedirect = false) => {
   const [token, setToken] = useState<string>("");
   const navigate = useNavigate();
-  const query = useQuery(["me", token], () => getUser());
+  const query = useQuery(["me", token], () => getUser(), {
+    enabled: token !== "",
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");

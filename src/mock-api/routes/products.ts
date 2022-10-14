@@ -1,10 +1,13 @@
+import { Product } from './../models/product';
+import { GenericResponse } from './../../shared/types/index';
 import { Request, Server } from "miragejs";
 import Schema from "miragejs/orm/schema";
 import { AppRegistry } from "../server";
 
 
 const getAllProduct = (schema: Schema<AppRegistry>) => {
-    return schema.all("product")
+    const response: GenericResponse<Product[]> = { isSuccess: true, errors: null, data: null }
+    return { ...response, data: schema.all("product").models }
 }
 
 

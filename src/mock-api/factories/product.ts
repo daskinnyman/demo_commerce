@@ -21,5 +21,8 @@ export const productFactory = Factory.extend({
     },
     material: () => {
         return faker.commerce.productMaterial()
+    }, 
+    image: () => {
+        return faker.image.food(640, 480, true)
     }
 });
