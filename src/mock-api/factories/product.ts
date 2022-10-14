@@ -5,9 +5,21 @@ export type ProductFactory = typeof productFactory
 
 export const productFactory = Factory.extend({
     name: () => {
-        return faker.name.fullName()
+        return faker.commerce.productName()
     },
-    email: () => {
-        return faker.internet.email()
+    color: () => {
+        return faker.color.human()
+    },
+    colorCode: () => {
+        return faker.color.rgb()
+    },
+    price: () => {
+        return faker.commerce.price()
+    },
+    description: () => {
+        return faker.commerce.productDescription()
+    },
+    material: () => {
+        return faker.commerce.productMaterial()
     }
 });

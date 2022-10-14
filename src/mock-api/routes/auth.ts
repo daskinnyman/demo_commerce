@@ -1,36 +1,35 @@
-import { Request, Server } from "miragejs";
+import { Request, Response, Server } from "miragejs";
 import Schema from "miragejs/orm/schema";
-import { AppRegisty } from "../server";
+import { AppRegistry } from "../server";
 import sign from 'jwt-encode';
+import { GenericResponse, LoginPayload, LoginResponseData } from "../../shared/types";
 
 const privateKey = 'secret'
 
-interface LoginPayload {
-    email: string, password: string
-}
 
-export const login = (schema: Schema<AppRegisty>, request: Request) => {
+export const login = (schema: Schema<AppRegistry>, request: Request) => {
     const { requestBody } = request;
 
+    const genericResponse: GenericResponse<LoginResponseData> = { isSuccess: true, data: null, errors: null };
+    const errorResponse = { ...genericResponse, isSuccess: false, errors: "invalid user or password" };
+
     if (!requestBody) {
-        return schema.none;
-    }
-    const loginPayload: LoginPayload = JSON.parse(requestBody);
-    console.log(loginPayload)
-    const user = schema.db.users.findBy({ email: loginPayload.email });
-    console.log(user)
-    if (!user) {
-        return schema.none;
+        return new Response(400, {}, errorResponse)
     }
 
-    const token = sign(user, privateKey)
-    console.log(token)
-    return {
-        token
+    const loginPayload: LoginPayload = JSON.parse(requestBody);
+    const user = schema.db.users.findBy({ email: loginPayload.email });
+
+    if (!user) {
+        return new Response(400, {}, errorResponse)
     }
+
+    const token = sign({ id: user.id, email: user.email, name: user.name }, privateKey)
+
+    return { ...genericResponse, data: { token } }
 }
 
-const routes = (server: Server<AppRegisty>) =>
+const routes = (server: Server<AppRegistry>) =>
     [
         server.post("/api/login", login),
 

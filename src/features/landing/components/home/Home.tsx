@@ -1,25 +1,23 @@
-import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./Home.scss";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUserInfoQuery } from "../../requests/useUserInfoQuery";
+import { useEffect } from "react";
+import { httpClient } from "../../../../shared/utils/httpClient";
 
 function Home() {
-  const navigate = useNavigate()
+  const { data: userData, isLoading } = useUserInfoQuery();
+  const navigate = useNavigate();
   useEffect(() => {
-    axios.get("api/reminders")
-      .then((el) => el.data)
-      .then((data) => console.log(data));
-
-    axios.get("api/reminders/1")
+    httpClient
+      .get("api/products")
       .then((el) => el.data)
       .then((data) => console.log(data));
   }, []);
 
-
   const handleLogin = () => {
-    navigate("login")
-  }
+    navigate("login");
+  };
 
   return (
     <div className="App">
@@ -28,6 +26,7 @@ function Home() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        {userData && <p>{userData.name}</p>}
         <a
           className="App-link"
           href="https://reactjs.org"

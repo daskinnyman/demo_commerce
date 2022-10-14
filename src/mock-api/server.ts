@@ -9,7 +9,7 @@ import { User } from "./models/user";
 type ProductModel = ModelDefinition<Product>
 type UserModel = ModelDefinition<User>
 
-export type AppRegisty = Registry<{
+export type AppRegistry = Registry<{
   product: ProductModel;
   user: UserModel
 }, {
@@ -28,7 +28,7 @@ function makeServer() {
     fixtures: {
       users: users
     },
-    seeds(server: Server<AppRegisty>) {
+    seeds(server: Server<AppRegistry>) {
       server.loadFixtures()
       server.createList("product", 100);
     },

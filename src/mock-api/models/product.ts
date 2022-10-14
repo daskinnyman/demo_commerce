@@ -1,4 +1,8 @@
 export interface Product {
     name: string;
-    email: string;
+    color:string;
+    colorCode:string;
+    price:number;
+    description:string;
+    material:string;
 }

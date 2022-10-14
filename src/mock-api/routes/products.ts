@@ -1,21 +1,21 @@
 import { Request, Server } from "miragejs";
 import Schema from "miragejs/orm/schema";
-import { AppRegisty } from "../server";
+import { AppRegistry } from "../server";
 
 
-const getAllProduct = (schema: Schema<AppRegisty>) => {
+const getAllProduct = (schema: Schema<AppRegistry>) => {
     return schema.all("product")
 }
 
 
-const getProductById = (schema: Schema<AppRegisty>, request: Request) => {
+const getProductById = (schema: Schema<AppRegistry>, request: Request) => {
     return schema.db.products.find(request.params.id)
 }
 
-const routes = (server: Server<AppRegisty>) =>
+const routes = (server: Server<AppRegistry>) =>
     [
-        server.get("/api/reminders", getAllProduct),
-        server.get("/api/reminders/:id", getProductById)
+        server.get("/api/products", getAllProduct),
+        server.get("/api/products/:id", getProductById)
     ]
 
 
