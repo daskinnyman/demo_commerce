@@ -1,4 +1,4 @@
-import { GridItem, Stack, Text } from "@chakra-ui/react";
+import { GridItem, Stack, Text, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../../../../../mock-api/models/product";
 
@@ -12,7 +12,7 @@ function ProductItem({ product }: { product: Product }) {
   return (
     <GridItem w={"100%"}>
       <Stack spacing={2} onClick={handleProductClick}>
-        <img src={product.image} alt={product.description} />
+        <Image objectFit={'fill'} src={product.image} alt={product.description} />
         <Text fontSize={"lg"} as={"b"}>
           {product.name}
         </Text>

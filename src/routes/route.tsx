@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     element: <Layout></Layout>,
     errorElement: <ErrorPage />,
     children: [
-      { path: "", element: <Home></Home> },
+      { index: true, element: <Home></Home> },
       {
         path: "/product/:id",
         element: <ProductDetail />,

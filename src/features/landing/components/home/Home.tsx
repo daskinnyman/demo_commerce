@@ -6,10 +6,9 @@ import {
   Grid,
   Stack,
   Box,
-
   Text,
   Button,
-
+  GridItem,
 } from "@chakra-ui/react";
 import ProductItem from "./components/productItem/ProductItem";
 import backGroundImage from "./clark-young-ueZXMrZFFKQ-unsplash.jpeg";
@@ -49,14 +48,26 @@ function Home() {
       </Box>
 
       <Container minWidth={"container.xl"} paddingTop={8}>
-        <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-          {productData?.data?.map((el) => (
-            <ProductItem
-              key={`${el.name}-${el.color}-${el.price}`}
-              product={el}
-            ></ProductItem>
-          ))}
+        <Grid
+          templateColumns={'250px 1fr'}
+          gap={4}
+          templateAreas={`
+                  "sidebar content"
+                 `}
+        >
+          <GridItem area={"sidebar"}>2222</GridItem>
+          <GridItem area={"content"}>
+            <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+              {productData?.data?.map((el) => (
+                <ProductItem
+                  key={`${el.name}-${el.color}-${el.price}`}
+                  product={el}
+                ></ProductItem>
+              ))}
+            </Grid>
+          </GridItem>
         </Grid>
+
         <button onClick={handleLogin}>Login</button>
       </Container>
     </>
