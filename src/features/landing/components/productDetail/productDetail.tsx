@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { Product } from "../../../../mock-api/models/product";
 import { GenericResponse, Nullable } from "../../../../shared/types";
 import { httpClient } from "../../../../shared/utils/httpClient";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const getProduct = async (productId: Nullable<string>) => {
   if (!productId) {
@@ -56,11 +57,19 @@ const ProductDetail = () => {
                 boxSize={10}
               ></Box>
             </HStack>
-
+            <Text fontSize={"medium"} noOfLines={2}>
+              material:{product?.data?.material}
+            </Text>
             <Text fontSize={"medium"} as={"p"} color="tomato">
               Price: {product?.data?.price}
             </Text>
-            <Button>Add to cart</Button>
+            <Button
+              leftIcon={
+                <AiOutlineShoppingCart size={24}></AiOutlineShoppingCart>
+              }
+            >
+              Add to cart
+            </Button>
           </Stack>
         </GridItem>
       </Grid>
