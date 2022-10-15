@@ -1,23 +1,20 @@
 import "./Home.scss";
 import { useNavigate } from "react-router-dom";
-import { useUserInfoQuery } from "../../requests/useUserInfoQuery";
 import { useProductListQuery } from "../../requests/useProductListQuery";
 import {
   Container,
   Grid,
   Stack,
   Box,
-  Avatar,
+
   Text,
   Button,
-  HStack,
+
 } from "@chakra-ui/react";
 import ProductItem from "./components/productItem/ProductItem";
 import backGroundImage from "./clark-young-ueZXMrZFFKQ-unsplash.jpeg";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Home() {
-  const { data: userData } = useUserInfoQuery();
   const { data: productData } = useProductListQuery();
   const navigate = useNavigate();
 
@@ -27,24 +24,6 @@ function Home() {
 
   return (
     <>
-      <Container
-        as="nav"
-        minWidth={"container.xl"}
-        paddingX={3}
-        paddingY={2}
-        display={"flex"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
-        <Text>Demo Commerce</Text>
-        <HStack spacing={4}>
-          <AiOutlineShoppingCart size={24}></AiOutlineShoppingCart>
-          {userData && (
-            <Avatar name={userData.name} src={userData.avatar} size={"sm"}></Avatar>
-          )}
-        </HStack>
-      </Container>
-
       <Box
         height={550}
         width={"100%"}

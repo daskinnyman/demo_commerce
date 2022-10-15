@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserInfo } from "../../../mock-api/models/user";
-import { GenericResponse } from "../../../shared/types";
-import { httpClient } from "../../../shared/utils/httpClient";
+import { UserInfo } from "../../mock-api/models/user";
+import { GenericResponse } from "../types";
+import { httpClient } from "../utils/httpClient";
+
 
 export const getUser = async () => {
   const res = await httpClient.get<GenericResponse<UserInfo>>("/api/me");
