@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserInfoQuery } from "../../requests/useUserInfoQuery";
 import { useProductListQuery } from "../../requests/useProductListQuery";
 import { Container, Grid } from "@chakra-ui/react";
-import ProductItem from "../productItem/ProductItem";
+import ProductItem from "./components/productItem/ProductItem";
 
 function Home() {
   const { data: userData } = useUserInfoQuery();

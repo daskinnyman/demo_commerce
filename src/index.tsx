@@ -4,7 +4,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import makeServer from "./mock-api/server";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
+import { router } from "./routes/route";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

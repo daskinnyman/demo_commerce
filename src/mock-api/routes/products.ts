@@ -12,7 +12,8 @@ const getAllProduct = (schema: Schema<AppRegistry>) => {
 
 
 const getProductById = (schema: Schema<AppRegistry>, request: Request) => {
-    return schema.db.products.find(request.params.id)
+    const response: GenericResponse<Product[]> = { isSuccess: true, errors: null, data: null }
+    return { ...response, data: schema.db.products.findBy({ id: request.params.id }) }
 }
 
 const routes = (server: Server<AppRegistry>) =>
