@@ -29,7 +29,7 @@ function Home() {
       <Container minWidth={"container.xl"} paddingTop={8}>
         <Grid
           templateColumns={"250px 1fr"}
-          gap={4}
+          gap={12}
           templateAreas={`
                   "sidebar content"
                  `}
@@ -56,7 +56,10 @@ function Home() {
                   <SliderThumb />
                 </Slider>
               </Box>
-              <Button leftIcon={<AiOutlineSearch></AiOutlineSearch>}>
+              <Button
+                leftIcon={<AiOutlineSearch></AiOutlineSearch>}
+                colorScheme="blue"
+              >
                 Search
               </Button>
               <Button leftIcon={<AiOutlineClear></AiOutlineClear>}>
