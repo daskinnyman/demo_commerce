@@ -30,7 +30,7 @@ function makeServer() {
     },
     seeds(server: Server<AppRegistry>) {
       server.loadFixtures()
-      server.createList("product", 100);
+      server.createList("product", 20);
     },
     routes() {
       registerRoute(this)

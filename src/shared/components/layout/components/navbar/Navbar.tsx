@@ -1,4 +1,4 @@
-import { Container, HStack, Avatar, Text } from "@chakra-ui/react";
+import { Container, HStack, Avatar, Heading } from "@chakra-ui/react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useUserInfoQuery } from "../../../../requests/useUserInfoQuery";
 
@@ -14,7 +14,7 @@ export const Navbar = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-      <Text>Demo Commerce</Text>
+      <Heading as="h6" size={"sm"}>Demo Commerce</Heading>
       <HStack spacing={4}>
         <AiOutlineShoppingCart size={24}></AiOutlineShoppingCart>
         {userData && (

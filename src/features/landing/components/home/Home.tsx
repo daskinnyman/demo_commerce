@@ -1,61 +1,69 @@
 import "./Home.scss";
-import { useNavigate } from "react-router-dom";
 import { useProductListQuery } from "../../requests/useProductListQuery";
 import {
+  Box,
+  Button,
   Container,
   Grid,
-  Stack,
-  Box,
-  Text,
-  Button,
   GridItem,
+  Heading,
+  SimpleGrid,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
 import ProductItem from "./components/productItem/ProductItem";
-import backGroundImage from "./clark-young-ueZXMrZFFKQ-unsplash.jpeg";
+import { Jumbotron } from "./components/jumbotron/Jumbotron";
+import { useProductColorQuery } from "../../requests/useProductColorQuery";
+import { AiOutlineClear, AiOutlineSearch } from "react-icons/ai";
 
 function Home() {
   const { data: productData } = useProductListQuery();
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate("login");
-  };
-
+  const { data: colors } = useProductColorQuery();
   return (
     <>
-      <Box
-        height={550}
-        width={"100%"}
-        backgroundImage={backGroundImage}
-        backgroundRepeat={"no-repeat"}
-        backgroundSize={"cover"}
-      >
-        <Stack
-          backgroundColor={"blackAlpha.400"}
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          width={"100%"}
-          height={"100%"}
-          spacing={4}
-        >
-          <Text fontSize={"3xl"} as={"b"} color={"white"} textAlign={"center"}>
-            Your desired product,
-            <br /> All in here!
-          </Text>
-          <Button>Go Shopping</Button>
-        </Stack>
-      </Box>
-
+      <Jumbotron />
       <Container minWidth={"container.xl"} paddingTop={8}>
         <Grid
-          templateColumns={'250px 1fr'}
+          templateColumns={"250px 1fr"}
           gap={4}
           templateAreas={`
                   "sidebar content"
                  `}
         >
-          <GridItem area={"sidebar"}>2222</GridItem>
+          <GridItem area={"sidebar"}>
+            <Stack spacing={4}>
+              <Heading as="h6" size={"md"}>
+                Search by
+              </Heading>
+              <Box>
+                <Text>Product color</Text>
+                <SimpleGrid columns={5} spacing={1}>
+                  {colors?.data?.map((color: string) => (
+                    <Box bg={color} height={"45px"} width={"45px"}></Box>
+                  ))}
+                </SimpleGrid>
+              </Box>
+              <Box>
+                <Text>Price</Text>
+                <Slider aria-label="slider-ex-1" defaultValue={30}>
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb />
+                </Slider>
+              </Box>
+              <Button leftIcon={<AiOutlineSearch></AiOutlineSearch>}>
+                Search
+              </Button>
+              <Button leftIcon={<AiOutlineClear></AiOutlineClear>}>
+                Reset
+              </Button>
+            </Stack>
+          </GridItem>
           <GridItem area={"content"}>
             <Grid templateColumns="repeat(3, 1fr)" gap={4}>
               {productData?.data?.map((el) => (
@@ -67,8 +75,6 @@ function Home() {
             </Grid>
           </GridItem>
         </Grid>
-
-        <button onClick={handleLogin}>Login</button>
       </Container>
     </>
   );

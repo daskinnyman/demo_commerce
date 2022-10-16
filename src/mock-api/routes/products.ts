@@ -16,10 +16,26 @@ const getProductById = (schema: Schema<AppRegistry>, request: Request) => {
     return { ...response, data: schema.db.products.findBy({ id: request.params.id }) }
 }
 
+const getProductColors = (schema: Schema<AppRegistry>, request: Request) => {
+    const products = schema.all("product").models;
+
+    const colors = products.reduce((prev: string[], curr: Product) => {
+        if (!prev.includes(curr.colorCode)) {
+            prev.push(curr.colorCode)
+        }
+
+        return prev;
+    }, [])
+
+    const response: GenericResponse<string[]> = { isSuccess: true, errors: null, data: null }
+    return { ...response, data: colors }
+}
+
 const routes = (server: Server<AppRegistry>) =>
     [
         server.get("/api/products", getAllProduct),
-        server.get("/api/products/:id", getProductById)
+        server.get("/api/products/colors", getProductColors),
+        server.get("/api/products/:id", getProductById),
     ]
 
 
