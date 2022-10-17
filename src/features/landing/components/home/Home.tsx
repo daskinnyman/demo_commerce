@@ -105,7 +105,7 @@ function Home() {
                 </HStack>
                 <Slider
                   aria-label="slider-ex-1"
-                  defaultValue={0}
+                  defaultValue={9999}
                   value={priceRange}
                   min={0}
                   max={9999}
