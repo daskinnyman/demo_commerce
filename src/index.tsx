@@ -7,6 +7,8 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/route";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { store } from "./shared/reducers/store";
 
 if (
   typeof makeServer === "function"
@@ -21,11 +23,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
         <RouterProvider router={router} />
       </ChakraProvider>
     </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 

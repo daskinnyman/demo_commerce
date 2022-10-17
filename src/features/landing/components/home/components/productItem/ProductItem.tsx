@@ -18,7 +18,7 @@ function ProductItem({ product }: { product: Product }) {
   };
 
   return (
-    <GridItem w={"100%"}>
+    <GridItem w={"100%"} cursor={"pointer"}>
       <Stack spacing={2} onClick={handleProductClick}>
         <Image
           objectFit={"fill"}

@@ -5,9 +5,23 @@ import Schema from "miragejs/orm/schema";
 import { AppRegistry } from "../server";
 
 
-const getAllProduct = (schema: Schema<AppRegistry>) => {
+const getAllProduct = (schema: Schema<AppRegistry>, request: Request) => {
+    const params = request.queryParams;
     const response: GenericResponse<Product[]> = { isSuccess: true, errors: null, data: null }
-    return { ...response, data: schema.all("product").models }
+    const query: any = {}
+
+    if (params?.color) {
+        query['colorCode'] = params.color;
+    }
+
+    let datas: Product[] = schema.db.products.where(query);
+
+    if (params?.price) {
+        datas = datas.filter(data => data.price <= params?.price)
+    }
+
+
+    return { ...response, data: datas }
 }
 
 

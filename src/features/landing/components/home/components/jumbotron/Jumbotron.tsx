@@ -1,8 +1,9 @@
-import { Stack, Box, Text, Button, Heading } from "@chakra-ui/react";
+import { Stack, Box, Button, Heading } from "@chakra-ui/react";
 
 import backGroundImage from "./clark-young-ueZXMrZFFKQ-unsplash.jpeg";
 
 export const Jumbotron = () => {
+
   return (
     <Box
       height={550}
@@ -24,7 +25,9 @@ export const Jumbotron = () => {
           Your desired product,
           <br /> All in here!
         </Heading>
-        <Button colorScheme="blue">Go Shopping</Button>
+        <Button colorScheme="blue">
+          Go Shopping
+        </Button>
       </Stack>
     </Box>
   );

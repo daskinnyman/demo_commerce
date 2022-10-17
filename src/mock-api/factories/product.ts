@@ -14,14 +14,14 @@ export const productFactory = Factory.extend({
         return faker.color.rgb()
     },
     price: () => {
-        return faker.commerce.price()
+        return faker.commerce.price(10, 9999)
     },
     description: () => {
         return faker.commerce.productDescription()
     },
     material: () => {
         return faker.commerce.productMaterial()
-    }, 
+    },
     image: () => {
         return faker.image.food(640, 480, true)
     }

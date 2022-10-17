@@ -12,11 +12,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../../../mock-api/models/product";
 import { GenericResponse, Nullable } from "../../../../shared/types";
 import { httpClient } from "../../../../shared/utils/httpClient";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../shared/reducers/cartSlice/cartSlice";
 
 const getProduct = async (productId: Nullable<string>) => {
   if (!productId) {
@@ -30,23 +32,43 @@ const getProduct = async (productId: Nullable<string>) => {
 };
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
   const productId = useParams();
+  const navigate = useNavigate();
 
   const { data: product } = useQuery(
     ["products", productId?.id],
     () => getProduct(productId?.id),
     { enabled: productId?.id !== undefined || productId?.id !== "" }
   );
+
+  const handleBreadCrumbClick = () => {
+    navigate("/");
+  };
+
+  const handleAddCart = () => {
+    dispatch(
+      addToCart({
+        productId: product?.data?.id,
+        productImg: product?.data?.image,
+        name: product?.data?.name,
+        color: product?.data?.color,
+        price: product?.data?.price,
+        amount: 1,
+      })
+    );
+  };
+
   return (
     <Container minWidth={"container.lg"}>
       <Breadcrumb paddingY={4}>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Products</BreadcrumbLink>
+          <BreadcrumbLink onClick={handleBreadCrumbClick}>
+            Products
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink>
-            {product?.data?.name}
-          </BreadcrumbLink>
+          <BreadcrumbLink>{product?.data?.name}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Grid templateColumns="repeat(2, 1fr)" gap={4}>
@@ -70,7 +92,10 @@ const ProductDetail = () => {
                 ></Box>
               </HStack>
               <Text fontSize={"medium"} as={"p"} color="tomato">
-                Price: {product?.data?.price}
+                Price:
+                <Text fontSize={"lg"} as={"b"}>
+                  {product?.data?.price}
+                </Text>
               </Text>
             </Stack>
             <Button
@@ -78,6 +103,7 @@ const ProductDetail = () => {
                 <AiOutlineShoppingCart size={24}></AiOutlineShoppingCart>
               }
               colorScheme="blue"
+              onClick={handleAddCart}
             >
               Add to cart
             </Button>

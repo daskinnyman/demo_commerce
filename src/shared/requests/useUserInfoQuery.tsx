@@ -5,7 +5,6 @@ import { UserInfo } from "../../mock-api/models/user";
 import { GenericResponse } from "../types";
 import { httpClient } from "../utils/httpClient";
 
-
 export const getUser = async () => {
   const res = await httpClient.get<GenericResponse<UserInfo>>("/api/me");
   return res.data;
@@ -37,7 +36,7 @@ export const useUserInfoQuery = (shouldRedirect = false) => {
     if (!data?.isSuccess) {
       navigate("/login");
     }
-  }, [shouldRedirect, query.isLoading]);
+  }, [shouldRedirect, query, navigate]);
 
   return { data: query.data?.data, isLoading: query.isLoading };
 };

@@ -9,15 +9,23 @@ import {
   MenuItem,
   MenuList,
   Stack,
-  Box,
   Text,
+  Image,
+  Box,
 } from "@chakra-ui/react";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineShoppingCart } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+  CartItem,
+  removeFromCart,
+} from "../../../../reducers/cartSlice/cartSlice";
 import { useUserInfoQuery } from "../../../../requests/useUserInfoQuery";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const cart = useSelector((state: any) => state.cart);
+  const dispatch = useDispatch();
   const { data: userData } = useUserInfoQuery();
 
   const handleMenuClick = () => {
@@ -25,6 +33,18 @@ export const Navbar = () => {
       return;
     }
     navigate("/login");
+  };
+
+  const handleLogoClick = () => {
+    navigate(`/`);
+  };
+
+  const handleRemoveClick = (item: CartItem) => {
+    dispatch(removeFromCart(item));
+  };
+
+  const handleItemClick = (productId: string) => {
+    navigate(`/product/${productId}`);
   };
 
   const handleLogout = () => {
@@ -42,7 +62,7 @@ export const Navbar = () => {
       justifyContent={"space-between"}
       alignItems={"center"}
     >
-      <Heading as="h6" size={"sm"}>
+      <Heading as="h6" size={"sm"} onClick={handleLogoClick} cursor={"pointer"}>
         Demo Commerce
       </Heading>
       <HStack spacing={4}>
@@ -53,18 +73,55 @@ export const Navbar = () => {
               <AiOutlineShoppingCart size={24}></AiOutlineShoppingCart>
             }
           >
-            Cart
+            Cart ({cart.items.length})
           </MenuButton>
           <MenuList minWidth="340px">
             <Stack paddingX={4} spacing={4}>
-              <Text
-                paddingY={4}
-                textAlign={"center"}
-                as={"b"}
-                color={"gray.600"}
-              >
-                Empty cart
-              </Text>
+              {cart.items.length > 0 ? (
+                <Stack spacing={4}>
+                  <Stack spacing={4}>
+                    {cart.items.map((item: CartItem) => (
+                      <Stack borderBottom={"1px solid #e7e7e7"} paddingY={2}>
+                        <HStack justifyContent={"flex-end"}>
+                          <AiOutlineClose
+                            onClick={() => handleRemoveClick(item)}
+                          ></AiOutlineClose>
+                        </HStack>
+                        <HStack justifyContent={"space-between"}>
+                          <Image src={item.productImg} width={"80px"} height={"80px"} objectFit={"cover"}></Image>
+                          <Box>
+                            <Text
+                              as={"b"}
+                              textAlign={"right"}
+                              textDecoration={"underline"}
+                              onClick={() => handleItemClick(item.productId)}
+                              cursor={"pointer"}
+                            >
+                              {item.name}
+                            </Text>
+                            <Text textAlign={"right"}>Price: {item.price}</Text>
+                            <Text textAlign={"right"}>
+                              Amount: {item.amount}
+                            </Text>
+                          </Box>
+                        </HStack>
+                      </Stack>
+                    ))}
+                  </Stack>
+                  <Text textAlign={"right"}>
+                    Total Price: {cart.totalPrice}
+                  </Text>
+                </Stack>
+              ) : (
+                <Text
+                  paddingY={4}
+                  textAlign={"center"}
+                  as={"b"}
+                  color={"gray.600"}
+                >
+                  Empty cart
+                </Text>
+              )}
               <Button size={"lg"}>Check out</Button>
             </Stack>
           </MenuList>
